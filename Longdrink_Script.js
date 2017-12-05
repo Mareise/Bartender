@@ -1,3 +1,19 @@
+function myFunction(){
+    
+    console.log('Hallo');
+
+    document.getElementById("Success").style.display="";
+
+};
+
+function myFunction_warning(){
+
+    document.getElementById("Warning").style.display="";
+    
+    console.log('Hallo');
+
+};
+
 function Motor() {
     var i2cBus = require("i2c-bus");
     var Pca9685Driver = require("pca9685").Pca9685Driver;
