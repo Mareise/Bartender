@@ -1,6 +1,7 @@
-function Motor() {
+
     var i2cBus = require("i2c-bus");
     var Pca9685Driver = require("pca9685").Pca9685Driver;
+    var http = require('http');
 
     var options = {
         i2c: i2cBus.openSync(1),
@@ -8,6 +9,7 @@ function Motor() {
         frequency: 50,
         debug: false
     };
+	console.log("Seas wos geht");
     pwm = new Pca9685Driver(options, function (err) {
         if (err) {
             console.error("Error initializing PCA9685");
@@ -29,7 +31,7 @@ function Motor() {
         pwm.setPulseLength(2, 1500);
 
         // Set the duty cycle to 25% for channel 8
-        pwm.setDutyCycle(8, 0.25);
+        pwm.setDutyCycle(8, 0.50);
 
         // Turn off all power to channel 6
         // (with optional callback)
@@ -44,4 +46,3 @@ function Motor() {
         // Turn on channel 3 (100% power)
         pwm.channelOn(3);
     });
-}
