@@ -8,7 +8,7 @@ fs.readFile('./test.js', function (err, html) {
     }       
     http.createServer(function(request, response) {  
         response.writeHeader(200, {"Content-Type": "text/html"});  
-        response.write(html);  
+        dt.Motor;
         response.end();  
     }).listen(8000);
 });

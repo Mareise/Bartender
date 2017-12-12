@@ -1,4 +1,4 @@
-exports.myDateTime = function () {
+exports.Motor = function () {
     
 var i2cBus = require("i2c-bus");
 var Pca9685Driver = require("pca9685").Pca9685Driver;
@@ -57,7 +57,6 @@ pwm = new Pca9685Driver(options, function (err) {
         } else {
             console.log("Channel 6 is off.");
         }
-<<<<<<< HEAD
         console.log("Initialization done");
 
         // Set channel 0 to turn on on step 42 and off on step 255
@@ -88,8 +87,6 @@ pwm = new Pca9685Driver(options, function (err) {
 
         // Turn on channel 3 (100% power)
         pwm.channelOn(3);
-=======
->>>>>>> 2037bfd92151b0e9176994949657a1b2f542f41c
     });
 
     // Turn on channel 3 (100% power)
