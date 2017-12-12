@@ -1,7 +1,12 @@
-
+exports.Motor = function () {
     var i2cBus = require("i2c-bus");
     var Pca9685Driver = require("pca9685").Pca9685Driver;
     var http = require('http');
+
+    http.createServer(function (req, res) {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end('Hello World!');
+    }).listen(8080);
 
     var options = {
         i2c: i2cBus.openSync(1),
@@ -9,7 +14,7 @@
         frequency: 50,
         debug: false
     };
-	console.log("Seas wos geht");
+    console.log("Seas wos geht");
     pwm = new Pca9685Driver(options, function (err) {
         if (err) {
             console.error("Error initializing PCA9685");
@@ -46,3 +51,4 @@
         // Turn on channel 3 (100% power)
         pwm.channelOn(3);
     });
+}
