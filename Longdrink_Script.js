@@ -15,7 +15,7 @@ function myFunction_warning() {
 };
 
 function Motor() {
-    var dt = require('./node.js');
+    var dt = require('./myfirstmodule');
 
     dt.Motor;
 }
