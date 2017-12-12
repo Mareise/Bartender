@@ -1,8 +1,14 @@
-var http = require('http');
-var dt = require('./test.js');
+var http = require('http'),
+    fs = require('fs');
 
-http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write("The date and time are currently: " + dt.myDateTime());
-    res.end();
-}).listen(8080);
+
+fs.readFile('./test.js', function (err, html) {
+    if (err) {
+        throw err; 
+    }       
+    http.createServer(function(request, response) {  
+        response.writeHeader(200, {"Content-Type": "text/html"});  
+        response.write(html);  
+        response.end();  
+    }).listen(8000);
+});
