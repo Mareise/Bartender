@@ -15,6 +15,14 @@ function myFunction_warning(){
 };
 
 function Motor() {
+
+    var http = require('http');
+
+    http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end('Hello World!');
+    }).listen(8080);
+    
     var i2cBus = require("i2c-bus");
     var Pca9685Driver = require("pca9685").Pca9685Driver;
 
