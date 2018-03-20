@@ -25,25 +25,6 @@ var options = {
 	debug: false
 };
 
-// encoder Inkrementalgeber
-var raspi = require('raspi');
-var RotaryEncoder = require('raspi-rotary-encoder').RotaryEncoder;
-
-var encoder = new RotaryEncoder({
-	pins: { a: "GPIO17", b: "GPIO18" },
-	pullResistors: { a: "up", b: "up" }
-});
-var result
-
-let getränkObj = [
-{id: 0, getränk:"malibu", position:"10"},
-{id: 1, getränk:"rum", position:"-10"},
-{id: 2, getränk:"wodka", position:"-20"}
-];
-
-// --------------------------------------------------------------------------
-
-// PWM Initialization
 pwm = new Pca9685Driver(options, function (err) {
 	if (err) {
 		console.error("Error initializing PCA9685");
@@ -51,7 +32,6 @@ pwm = new Pca9685Driver(options, function (err) {
 	}
 	console.log("Initialization done");
 })
-
 
 app.get('/Test/id/:Id',
 	function (req, res) {
@@ -65,52 +45,39 @@ app.get('/Test/id/:Id',
 		res.status(200).send('Geschafft')
 	});
 
-// --------------------------------------------------------------------------	
 
-function links(dauer) {
-	pwm.setDutyCycle(9, 0);
-	MotorBeschleunigen(8)
 
-	setTimeout(function () {
-		MotorBremsen(8)	                   //  ..  setTimeout()
-	}, dauer)
-}
-
-function rechts(dauer) {
-	pwm.setDutyCycle(8, 0);
-	MotorBeschleunigen(9)
-
-	setTimeout(function () {
-		MotorBremsen(9)	                   //  ..  setTimeout()
-	}, dauer)
-}
-
-// -------------------------------------------------------------------------	
-
-app.get('/Bartender/getränk/:getränk', function (req, res) {
+app.get('/Test/richtung/:richtung', function (req, res) {
 	console.log("HALLO " + richtung)
 
-	var fs = require('fs');
-	var getränkid = parseInt(req.params.getränkid);
+	var richtung = parseInt(req.params.richtung);
 
-	let standort = ablesen()
+	if (richtung == "1") {
+		pwm.setDutyCycle(9, 0);
+		MotorBeschleunigen(8)
 
-	getränkstandort = getränkeObj[getränkid].position
-
-	if (getränkestandort < standort) {
-		rechts(1000)
-	}
-
-	if (getränkestandort > standort) {
-		links(1000)
+		setTimeout(function () {
+			MotorBremsen(8)	                   //  ..  setTimeout()
+		}, 2000)
+		res.status(200).send('Geschafft')
 	}
 
 
-});
+
+	//-----------------------------------------------------------------
+	if (richtung == "2") {
+		pwm.setDutyCycle(8, 0);
+		MotorBeschleunigen(9)
+
+		setTimeout(function () {
+			MotorBremsen(9)	                   //  ..  setTimeout()
+		}, 2000)
+		res.status(200).send('Geschafft')
+	}
+}
+)
 
 
-
-// -------------------------------------------------------------------------
 
 function MotorBremsen(kanal) {
 
@@ -158,19 +125,27 @@ function MotorBeschleunigen(kanal) {
 	myLoop();
 }
 
+var raspi = require('raspi');
+var RotaryEncoder = require('raspi-rotary-encoder').RotaryEncoder;
+
+var encoder = new RotaryEncoder({
+	pins: { a: "GPIO17", b: "GPIO18" },
+	pullResistors: { a: "up", b: "up" }
+});
+var result
 
 
-// -------------------------------------------------------------------------
 
 raspi.init(function () {
 
 	encoder.addListener('change', function (evt) {
 		console.log('Count', evt.value);
 		result = "Count" + evt.value
-		function ablesen() {
+		app.get('/Test/ablesen/', function (req, res) {
 			console.log("Wir sind drinnen")
-			return result
-		}
+			res.status(200).send(result)
+
+		})
 
 	})
 
