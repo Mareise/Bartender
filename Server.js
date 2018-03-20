@@ -36,9 +36,9 @@ var encoder = new RotaryEncoder({
 var result
 
 let getränkObj = [
-{id: 0, getränk:"malibu", position:"-120"},
-{id: 1, getränk:"rum", position:"30"},
-{id: 2, getränk:"wodka", position:"226"}
+{id: 0, getränk:"malibu", position:"-88"},
+{id: 1, getränk:"rum", position:"2"},
+{id: 2, getränk:"wodka", position:"98"}
 ];
 
 // --------------------------------------------------------------------------
